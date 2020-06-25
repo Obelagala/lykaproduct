@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lykaproduct", "lykaproduct\lykaproduct.csproj", "{00B360F4-659B-4926-B33D-94848833EAEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LPAccess", "LPAccess", "{2CE74EED-90E0-4DAE-BC08-24CBCE398FE3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LPEntities", "LPEntities", "{034A1E6F-5646-4131-8CBB-15DE1FB0C720}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LPAccess", "LPAccess\LPAccess.csproj", "{7A9BA962-8127-4945-B80D-FAE6C8F6CAF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LPEntities", "LPEntities\LPEntities.csproj", "{0376D889-88C6-468C-9FC4-2954AA68FEAD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00B360F4-659B-4926-B33D-94848833EAEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00B360F4-659B-4926-B33D-94848833EAEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00B360F4-659B-4926-B33D-94848833EAEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00B360F4-659B-4926-B33D-94848833EAEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A9BA962-8127-4945-B80D-FAE6C8F6CAF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A9BA962-8127-4945-B80D-FAE6C8F6CAF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A9BA962-8127-4945-B80D-FAE6C8F6CAF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A9BA962-8127-4945-B80D-FAE6C8F6CAF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0376D889-88C6-468C-9FC4-2954AA68FEAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0376D889-88C6-468C-9FC4-2954AA68FEAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0376D889-88C6-468C-9FC4-2954AA68FEAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0376D889-88C6-468C-9FC4-2954AA68FEAD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7A9BA962-8127-4945-B80D-FAE6C8F6CAF2} = {2CE74EED-90E0-4DAE-BC08-24CBCE398FE3}
+		{0376D889-88C6-468C-9FC4-2954AA68FEAD} = {034A1E6F-5646-4131-8CBB-15DE1FB0C720}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {51BF2F16-9604-4266-8A54-6301C575FB2C}
+	EndGlobalSection
+EndGlobal

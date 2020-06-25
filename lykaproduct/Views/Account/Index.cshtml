@@ -1,0 +1,113 @@
+﻿@model LPEntities.User
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/views/Shared/_logLayout.cshtml";
+}
+<div class="row w-100 mx-0">
+    <div class="col-lg-4 mx-auto">
+        <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+            <div class="brand-logo">
+                <img src="~/Content/images/logo.svg" alt="logo">
+            </div>
+            <h4>Hello! let's get started</h4>
+            <h6 class="font-weight-light">Sign in to continue.</h6>
+            @using (Html.BeginForm("Index", "Account", FormMethod.Post))
+            {
+                <div class="form-group">
+                    @*<input type="email" class="form-control form-control-lg" name="userName" id="txtUserName" placeholder="Username" required>*@
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg", @required = "required", @placeholder = "User Name" })
+                </div>
+                <div class="form-group">
+                    @*<input type="password" class="form-control form-control-lg" name="userPassword" id="txtPassword" placeholder="Password" required>*@
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control form-control-lg", @required = "required", @placeholder = "Password" })
+                </div>
+                <div class="mt-3">
+                    <input type="submit" name="name" value="SIGN IN" class="btn btn-block btn-primary btn-lg" />
+                </div>
+                <div class="my-2 d-flex justify-content-between align-items-center">
+                    <div class="form-check">
+                        <label class="form-check-label text-muted">
+                            <input type="checkbox" class="form-check-input">
+                            Keep me signed in
+                        </label>
+                    </div>
+                    @Html.ActionLink("Forgot password", "Forgotpassword", "Account", new { area = "" }, new { @class = "auth-link text-black" })
+                </div>
+                <div class="mb-2">
+                    <button type="button" class="btn btn-block btn-facebook auth-form-btn">
+                        <i class="ti-facebook mr-2"></i>Connect using facebook
+                    </button>
+                </div>
+                <div class="text-center mt-4 font-weight-light">
+                    Don't have an account? @Html.ActionLink("Create", "Register", "Account", new { area = "" }, new { @class = "text-primary" })
+                </div>
+            }
+            <span>@Html.DisplayFor(m => m.Error)</span>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+@*<div class="row w-100 mx-0">
+        <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                <div class="brand-logo">
+                    <img src="~/Content/images/logo.svg" alt="logo">
+                </div>
+                <h4>Hello! let's get started</h4>
+                <h6 class="font-weight-light">Sign in to continue.</h6>
+
+                <form class="pt-3" action="Account/Index" id="loginForm" method="post">
+                    <div class="form-group">
+                        <input type="email" class="form-control form-control-lg" name="userName" id="txtUserName" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control form-control-lg" name="userPassword" id="txtPassword" placeholder="Password" required>
+                    </div>
+                    <div class="mt-3">
+                        <input type="submit"  name="name" value="SIGN IN" class="btn btn-block btn-primary btn-lg"/>
+                    </div>
+                    <div class="my-2 d-flex justify-content-between align-items-center">
+                        <div class="form-check">
+                            <label class="form-check-label text-muted">
+                                <input type="checkbox" class="form-check-input">
+                                Keep me signed in
+                            </label>
+                        </div>
+                        @Html.ActionLink("Forgot password", "Forgotpassword", "Account", new { area = "" }, new { @class = "auth-link text-black" })
+                    </div>
+                    <div class="mb-2">
+                        <button type="button" class="btn btn-block btn-facebook auth-form-btn">
+                            <i class="ti-facebook mr-2"></i>Connect using facebook
+                        </button>
+                    </div>
+                    <div class="text-center mt-4 font-weight-light">
+                        Don't have an account? @Html.ActionLink("Create", "Register", "Account", new { area = "" }, new { @class = "text-primary" })
+                                                           </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $("input[type='submit']").click(function () {
+            var userName = $("input[name='userName']").val();
+            var userPassword = $("input[name='userPassword']").val();
+           if (!ValidateEmail(userName)) {
+                alert("Invalid email address.");
+            }
+            else {
+                alert("Valid email address.");
+            }
+        })
+
+    </script>*@
+
+

@@ -1,0 +1,52 @@
+﻿@model LPEntities.Media
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/views/Shared/_mainLayout.cshtml";
+}
+
+
+<style>
+</style>
+
+<div class="card">
+    <div class="card-body">
+        <h1>YouTube Christian Video songs</h1>
+        <div class="row">
+            <div class="col-lg-4"><a href="">Hello</a></div>
+            <div class="col-lg-8">Content</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" width="850" height="400" name="videplayer" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <p><a href="https://www.youtube.com/embed/qgG_MQkwmcM" target="videplayer">Deva Ni Divya Vakyamu</a></p>
+                <p><a href="https://www.youtube.com/embed/5ZAPkIxc2KA" target="videplayer">Kadavari Ghadiya</a></p>
+                <p><a href="https://www.youtube.com/embed/t2CqoCiRWzc" target="videplayer">Randi Yutsahinchi Padudamu</a></p>
+                <p><a href="https://www.youtube.com/embed/u-9BH6zfsDA" target="videplayer">Naa Deva nee Krupa Goniyaadaga</a></p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "Media", FormMethod.Post))
+        {
+            <input type="file" class="btn btn-md btn-info" accept=".jpg,.png" />
+            <input type="submit" class="btn btn-md btn-info" value="Upload" />
+        }
+
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("iframe").attr('src', 'https://www.youtube.com/embed/qgG_MQkwmcM');
+    })
+</script>
+

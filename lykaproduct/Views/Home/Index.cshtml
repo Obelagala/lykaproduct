@@ -1,4 +1,203 @@
-﻿@{
+﻿@model LPEntities.User
+
+@{
     ViewBag.Title = "Index";
     Layout = "~/views/Shared/_mainLayout.cshtml";
 }
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Personal Details</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>EmailID</th>
+                                <th>Gender</th>
+                                <th>Phone Number</th>
+                                <th>City</th>
+                                <th>Address</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.UserList)
+                            {
+                                <tr>
+
+                                    <td>@item.Name</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Gender</td>
+                                    <td>@item.PhoneNumber</td>
+                                    <td>@item.CityName</td>
+                                    <td>@item.Address</td>
+                                    <td>
+                                        @*@Html.ActionLink("Edit", new {UserID = @item.UserID, Email = @item.Email}, new { @class = "btn btn-primary btn-sm", @id="btnEdit"})*@
+                                        <button type="button" class="btn btn-primary btn-sm btnEdit" id="btnEdit" userId="@item.UserID">Edit</button>
+                                        <button type="button" class="btn btn-primary btn-sm btnDelete" id="btnDelete" userId="@item.UserID">Delete</button>
+                                        @*@Html.ActionLink("Delete", "Delete", "Home", new { @class = "btn btn-danger btn-sm" userId="@item.UserID" })*@
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>*@
+
+<div class="modal fade bd-example-modal-lg" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <span id="euserID" style="display:none;"></span>
+                <form id="myform">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="euserName">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">EmailID:</label>
+                        <input type="text" class="form-control" id="eemailID">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="gender" class="">Gender:</label><br />
+                        <input type="radio" id="eradmale" name="gender" value="Male">Male
+                        <input type="radio" id="eradfemale" name="gender" value="Female" />Female
+                        <input type="radio" id="eradOther" name="gender" value="Others" />Others
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">PhoneNumber:</label>
+                        <input type="text" class="form-control" id="ePhoneNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">City:</label>
+                        <input type="text" class="form-control" id="eCity">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Address:</label>
+                        <textarea class="form-control" id="eAddress" rows="8"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary" id=editsubmitbtn>Submit</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".btnEdit").on('click', function () {
+
+            var UserID = $(this).attr("userId");
+            var currentRow = $(this).closest("tr");
+
+            $("#euserID").text(UserID);
+            $("#euserName").val(currentRow.find("td:eq(0)").text());
+            $("#eemailID").val(currentRow.find("td:eq(1)").text());
+            $("#ePhoneNumber").val(currentRow.find("td:eq(3)").text());
+            $("#eCity").val(currentRow.find("td:eq(4)").text());
+            $("#eAddress").val(currentRow.find("td:eq(5)").text());
+
+            var gender = currentRow.find("td:eq(2)").text();
+            if (gender == "Male") {
+                $("#eradmale").attr("checked", true);
+            }
+            else if (gender == "Female") {
+                $("#eradfemale").attr("checked", true);
+            }
+            else {
+                $("#eradOther").attr("checked", true);
+            }
+
+            $("#editUserModal").modal("show");
+        });
+
+        $("#editsubmitbtn").click(function () {
+            var user = {
+                UserID: $("#euserID").text(),
+                Name: $("#euserName").val(),
+                Email: $("#eemailID").val(),
+                Gender: $('input[name="gender"]:checked').val(),
+                PhoneNumber: $("#ePhoneNumber").val(),
+                CityName: $("#eCity").val(),
+                Address: $("#eAddress").val()
+            }
+            $.ajax({
+                url: "../Home/EditUserDetails",
+                type: "Post",
+                data: user,
+                success: function (result) {                   
+                        $(".modal").each(function () {
+                            $(this).modal('hide');
+                        });
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
+                  
+                }
+            })
+        })
+        $(".btnDelete").on('click', function () {
+
+            var UserID = $(this).attr("userId");
+            var IsDelete = true;
+            var currentRow = $(this).closest("tr");
+            var user = {
+                UserID: UserID,
+                Name: currentRow.find("td:eq(0)").text(),
+                IsDelete: true,
+                Email: currentRow.find("td:eq(1)").text(),
+                Gender: currentRow.find("td:eq(2)").text(),
+                PhoneNumber: currentRow.find("td:eq(3)").text(),
+                CityName: currentRow.find("td:eq(4)").text(),
+                Address: currentRow.find("td:eq(5)").text()
+            }
+            $.ajax({
+                url: "../Home/EditUserDetails",
+                type: "Post",
+                data: user,
+                success: function (result) {
+                     setTimeout(function () {
+                            location.reload();
+                        }, 2000);
+
+                }
+            })
+        });
+
+    })
+    //var name = currentRow.find("td:eq(0)").text();
+            //var email = currentRow.find("td:eq(1)").text();
+            //var gender = currentRow.find("td:eq(2)").text();
+            //var phoneNumber = currentRow.find("td:eq(3)").text();
+            //var cityName = currentRow.find("td:eq(4)").text();
+            //var address = currentRow.find("td:eq(4)").text();
+            //var user = {
+            //    UserID: UserID,
+            //    Name: name,
+            //    Email: email,
+            //    Gender: gender,
+            //    PhoneNumber: phoneNumber,
+            //    CityName: cityName,
+            //    Address:address
+            //}
+            //}
+</script>
+

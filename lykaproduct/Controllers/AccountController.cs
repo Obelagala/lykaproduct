@@ -1,14 +1,17 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LPEntities;
+using LPAccess;
 
 namespace lykaproduct.Controllers
 {
     public class AccountController : Controller
     {
+        CitiesServices _citiesServices = new CitiesServices();
+        UserServices _userServices = new UserServices();
         // GET: Account
         public ActionResult Index()
         {
@@ -16,107 +19,64 @@ namespace lykaproduct.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index( User user)
+        public ActionResult Index(User user)
         {
-            var userName = user.Email;
-            var userPassword = user.Password;
-            var error = user.Error;
-            if(userName =="obaiah31@gmail.com" && userPassword == "123456")
+            User us = new User();
+            us = _userServices.GetUserLogin(user);
+            if(user.UserID != 0)
             {
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-                error = "Please Enter valid Email and Password";
+                user.Error = "Invalid Details";
                 return View(user);
             }
-           
+         
+
         }
-        public ActionResult Register()
+        [HttpGet]
+        public ActionResult Register(User user)
         {
-            List<User> userlist = new List<User>() { 
-            new User(){ID=1001,Name ="Kurnool"},
-            new User(){ID=1002,Name = "Chitoor" },
-            new User(){ID =1003,Name ="Kadapa"}
-            };
-          
-            return View(userlist);
+            //var userlist = new List<User>() {
+            //new User{ ID = 1001, City = "Kurnool" },
+            //new User{ ID = 1002, City = "Chitoor" },
+            //new User{ ID = 1003, City = "Kadapa" }
+            //            };
+
+            //user.UserList = userlist;
+            List<Cities> cities = new List<Cities>();
+            cities = _citiesServices.GetCities();
+
+            user.Citylist = cities;
+            
+            return View(user);
+        }
+        [HttpPost]
+        public ActionResult SaveUserDetails(User user )
+        {
+            User us = new User();
+            us = _userServices.SaveUserDetails(user);
+            return RedirectToAction("Index","Account",user);
         }
         public ActionResult Forgotpassword()
         {
+            
             return View();
         }
-
-        // GET: Account/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Account/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Account/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Forgotpassword(User user)
         {
-            try
+            User us = new User();
+            us = _userServices.updateUserPassword(user);
+            if(user.UserID == 101)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                return View(user);
             }
-            catch
-            {
-                return View();
+            else {
+                return RedirectToAction("Index", "Account");
             }
-        }
-
-        // GET: Account/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Account/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Account/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Account/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+           
         }
     }
 }

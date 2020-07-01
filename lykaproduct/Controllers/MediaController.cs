@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using LPEntities;
+using System.ComponentModel;
+using lykaproduct.Models;
+using LPAccess;
 
 namespace lykaproduct.Controllers
 {
     public class MediaController : Controller
     {
+        UserServices _userServices = new UserServices();
         // GET: Media
         public ActionResult Index()
         {
@@ -17,8 +22,72 @@ namespace lykaproduct.Controllers
         [HttpPost]
         public ActionResult Index(Media md)
         {
+
             return View();
         }
+        public ActionResult uploadimage()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult uploadimage(Media image)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if(image != null)
+                    {
+                        string fileName = Path.GetFileNameWithoutExtension(image.ImageFile.FileName);
+                        string extension = Path.GetExtension(image.ImageFile.FileName);
+                        fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                        var FileName = fileName;
+                        image.ImagePath = "~/Content/uploads/" + fileName;
+                        fileName = Path.Combine(Server.MapPath("~/Content/uploads"), fileName);
+                        image.ImageFile.SaveAs(fileName);
+                        Media fum = new Media();
+                        fum.Title = image.Title;
+                        fum.Descripction = image.Descripction;
+                        fum.ImageName = FileName;
+                        fum.ImagePath = image.ImagePath;
+                        _userServices.SaveImageDetails(fum);
+
+                    }
+                }
+                catch (Exception) { }
+            }
+            ModelState.Clear();
+           
+                return View();
+        }
+
+
+        //  [HttpPost]
+        //public ActionResult UploadFiles(HttpPostedFileBase file)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+
+        //            //Method 2 Get file details from HttpPostedFileBase class   
+
+        //            if (file != null)
+        //            {
+        //                var filename = Path.GetFileName(file.FileName);
+        //                var path = Path.Combine(Server.MapPath("~/Content/uploads"), filename);                                               
+        //                file.SaveAs(path);
+        //            }
+        //            ViewBag.FileStatus = "File uploaded successfully.";
+        //        }
+        //        catch (Exception)
+        //        {
+        //            ViewBag.FileStatus = "Error while file uploading.";
+        //        }
+        //    }
+        //    return View("Index");
+        // }
 
         // GET: Media/Details/5
         public ActionResult Details(int id)

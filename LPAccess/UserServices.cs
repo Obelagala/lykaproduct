@@ -204,5 +204,10 @@ namespace LPAccess
             }
             return user;
         }
+        public Media SaveImageDetails(Media fum)
+        {
+            return fum;
+        }
     }
 }
+

@@ -27,8 +27,9 @@ namespace lykaproduct.Controllers
         }
         public ActionResult uploadimage()
         {
-
-            return View();
+            Media md = new Media();
+            md.MediaList = _userServices.GetGraphicImage();
+            return View(md);
         }
         [HttpPost]
         public ActionResult uploadimage(Media image)
@@ -48,11 +49,10 @@ namespace lykaproduct.Controllers
                         image.ImageFile.SaveAs(fileName);
                         Media fum = new Media();
                         fum.Title = image.Title;
-                        fum.Descripction = image.Descripction;
+                        fum.Description = image.Description;
                         fum.ImageName = FileName;
                         fum.ImagePath = image.ImagePath;
                         _userServices.SaveImageDetails(fum);
-
                     }
                 }
                 catch (Exception) { }

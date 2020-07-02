@@ -211,6 +211,8 @@
     <Content Include="Content\images\favicon.png" />
     <Content Include="Content\images\logo-mini.svg" />
     <Content Include="Content\images\logo.svg" />
+    <Content Include="Content\uploads\8-2-nature-free-download-png204505403.png" />
+    <Content Include="Content\uploads\nature200420627.jfif" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -355,7 +357,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -206,8 +206,81 @@ namespace LPAccess
         }
         public Media SaveImageDetails(Media fum)
         {
+            _objSqlConn = new SqlConnection(objConnectionString);
+            SqlCommand sqlComm = new SqlCommand("saveGraphicImage", _objSqlConn);
+            try
+            {
+                if (_objSqlConn.State != ConnectionState.Open)
+                    _objSqlConn.Open();
+                DataTable ds = new DataTable();
+                //sqlComm.Parameters.AddWithValue("@ImageID", fum.ImageID);
+                sqlComm.Parameters.AddWithValue("@Name", fum.ImageName);
+                sqlComm.Parameters.AddWithValue("@ImagePath", fum.ImagePath);
+                sqlComm.Parameters.AddWithValue("@Title", fum.Title);
+                sqlComm.Parameters.AddWithValue("@Description", fum.Description);
+
+
+                sqlComm.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter da = new SqlDataAdapter { SelectCommand = sqlComm };
+                da.Fill(ds);
+
+                if (ds.Rows.Count == 1)
+                {
+
+                    fum.Error = ds.Rows[0]["Error"].ToString();
+                    fum.ErrorCode = Convert.ToInt32(ds.Rows[0]["ErrorCode"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                sqlComm.Connection.Close();
+            }
+
             return fum;
+        }
+        public List<Media> GetGraphicImage()
+        {
+            _objSqlConn = new SqlConnection(objConnectionString);
+
+            SqlCommand sqlComm = new SqlCommand("selGraphicImage", _objSqlConn);
+            List<Media> mdlist = new List<Media>();
+            try
+            {
+                if (_objSqlConn.State != ConnectionState.Open)
+
+                    _objSqlConn.Open();
+
+                DataTable ds = new DataTable();
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter da = new SqlDataAdapter { SelectCommand = sqlComm };
+                da.Fill(ds); if (ds.Rows.Count > 0)
+                {
+                    for (int i = 0; i < ds.Rows.Count; i++)
+                    {
+                        DataRow dr = ds.Rows[i];
+                        mdlist.Add(new Media
+                        {
+                            ImageID = (dr["ImageID"] == DBNull.Value) ? 0 : Convert.ToInt32(dr["ImageID"].ToString()),
+                            //ImageName = (dr["Name"] == DBNull.Value) ? null : dr["Name"].ToString(),
+                            ImagePath = (dr["ImagePath"] == DBNull.Value) ? null : dr["ImagePath"].ToString(),
+                            Title = (dr["Title"] == DBNull.Value) ? null : dr["Title"].ToString(),
+                            Description = (dr["Description"] == DBNull.Value) ? null : dr["Description"].ToString()
+
+                        }); ;
+                    }
+                }
+            }
+            catch (Exception ex) { }
+            finally
+            {
+                sqlComm.Connection.Close();
+            }
+
+            return mdlist;
         }
     }
 }
-
